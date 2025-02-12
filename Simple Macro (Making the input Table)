@@ -1,0 +1,39 @@
+function main(workbook: ExcelScript.Workbook) {
+	let selectedSheet = workbook.getActiveWorksheet();
+	// Set range B7 on selectedSheet
+	selectedSheet.getRange("B7").setFormula("=SEQUENCE(O2+1,1,C3,1)");
+	// Set format for range B7:B13 on selectedSheet
+	selectedSheet.getRange("B7:B13").setNumberFormatLocal("m/d/yyyy");
+
+	// Set range D7 on selectedSheet
+	selectedSheet.getRange("C7").setFormula("=B7");
+	// Auto fill range
+	selectedSheet.getRange("C7").autoFill("C7:C13", ExcelScript.AutoFillType.fillDefault);
+	// Set format for range D7:D13 on selectedSheet
+	selectedSheet.getRange("C7:C13").setNumberFormatLocal("dddd");
+
+	// Set range D6:E6 on selectedSheet
+	selectedSheet.getRange("D6:E6").setValues([["Start","End"]]);
+	// Set border for range B6:E13 on selectedSheet
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.diagonalDown).setStyle(ExcelScript.BorderLineStyle.none);
+	// Set border for range B6:E13 on selectedSheet
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.diagonalUp).setStyle(ExcelScript.BorderLineStyle.none);
+	// Set border for range B6:E13 on selectedSheet
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeLeft).setStyle(ExcelScript.BorderLineStyle.continuous);
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeLeft).setWeight(ExcelScript.BorderWeight.thin);
+	// Set border for range B6:E13 on selectedSheet
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeTop).setStyle(ExcelScript.BorderLineStyle.continuous);
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeTop).setWeight(ExcelScript.BorderWeight.thin);
+	// Set border for range B6:E13 on selectedSheet
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeBottom).setStyle(ExcelScript.BorderLineStyle.continuous);
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeBottom).setWeight(ExcelScript.BorderWeight.thin);
+	// Set border for range B6:E13 on selectedSheet
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeRight).setStyle(ExcelScript.BorderLineStyle.continuous);
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.edgeRight).setWeight(ExcelScript.BorderWeight.thin);
+	// Set border for range B6:E13 on selectedSheet
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideVertical).setStyle(ExcelScript.BorderLineStyle.continuous);
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideVertical).setWeight(ExcelScript.BorderWeight.thin);
+	// Set border for range B6:E13 on selectedSheet
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideHorizontal).setStyle(ExcelScript.BorderLineStyle.continuous);
+	selectedSheet.getRange("B6:E13").getFormat().getRangeBorder(ExcelScript.BorderIndex.insideHorizontal).setWeight(ExcelScript.BorderWeight.thin);
+}
