@@ -1,0 +1,75 @@
+
+Public Sub buildtable()
+newSheet
+importdata
+tims
+
+
+End Sub
+
+Public Sub importdata()
+Dim x As Integer
+Range("A31") = Sheets("adatok").Range("O2") + 1
+Range("A32") = Sheets("adatok").Range("F3")
+   
+Range("A2").Select
+For x = 1 To Range("A31")
+    ActiveCell.Value = Sheets("adatok").Cells(x + 6, 2).Value
+    ActiveCell.Offset(1, 0).Select
+    Next
+    
+Range("C31").Select
+For x = 1 To Range("A31")
+    ActiveCell.Value = Sheets("adatok").Cells(x + 6, 4).Value
+    ActiveCell.Offset(1, 0).Select
+    Next
+    
+Range("D31").Select
+For x = 1 To Range("A31")
+    ActiveCell.Value = Sheets("adatok").Cells(x + 6, 5).Value
+    ActiveCell.Offset(1, 0).Select
+    Next
+    
+Columns("B:B").Value = Columns("A:A").Value
+
+
+Columns("A:B").ColumnWidth = 20
+Columns("B:B").Select
+Selection.NumberFormat = "dddd"
+Range("A:A").Select
+Selection.NumberFormat = "mmmm dd"
+
+Range("A31:A32").Select
+Selection.NumberFormat = "0"
+
+Range("B31:B32").Delete (xlShiftUp)
+
+Range("A1").Select
+
+
+End Sub
+
+Public Sub newSheet()
+Dim sheet As Worksheet
+Set sheet = ActiveWorkbook.Sheets.Add(After:=ActiveWorkbook.Worksheets(ActiveWorkbook.Worksheets.Count))
+End Sub
+
+Public Sub tims()
+
+Range("C1").Select
+
+Set minrng = Range("C31:C37")
+min = Application.WorksheetFunction.min(minrng)
+
+Set maxrng = Range("D31:D37")
+max = Application.WorksheetFunction.max(maxrng)
+
+For y = min To max - 1
+    For x = 1 To Range("A32")
+        ActiveCell.Value = y & " ~ " & y + 1
+        ActiveCell.Offset(0, 1).Select
+        Next x
+    Next y
+
+
+End Sub
