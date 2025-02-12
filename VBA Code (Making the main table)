@@ -3,6 +3,7 @@ Public Sub buildtable()
 newSheet
 importdata
 tims
+condformat
 
 
 End Sub
@@ -11,6 +12,8 @@ Public Sub importdata()
 Dim x As Integer
 Range("A31") = Sheets("adatok").Range("O2") + 1
 Range("A32") = Sheets("adatok").Range("F3")
+Range("A33") = Sheets("adatok").Range("E3")
+Range("A34") = Sheets("adatok").Range("G3")
    
 Range("A2").Select
 For x = 1 To Range("A31")
@@ -39,7 +42,7 @@ Selection.NumberFormat = "dddd"
 Range("A:A").Select
 Selection.NumberFormat = "mmmm dd"
 
-Range("A31:A32").Select
+Range("A31:A35").Select
 Selection.NumberFormat = "0"
 
 Range("B31:B32").Delete (xlShiftUp)
@@ -58,18 +61,97 @@ Public Sub tims()
 
 Range("C1").Select
 
-Set minrng = Range("C31:C37")
+Set minrng = Range("C31:C" & (30 + Range("A31")))
 min = Application.WorksheetFunction.min(minrng)
 
-Set maxrng = Range("D31:D37")
+Set maxrng = Range("D31:D" & (30 + Range("A31")))
+max = Application.WorksheetFunction.max(maxrng)
+    
+If Range("A34") = 1 Then
+        For y = min To max - 1
+        For x = 1 To Range("A32")
+            ActiveCell.Value = y & ":" & (Range("A33") * (x - 1))
+            ActiveCell.Offset(0, 1).Select
+            
+            Next x
+        Next y
+    Else
+        For y = min To max - 1
+        For x = 1 To Range("A32")
+            ActiveCell.Value = y & " ~ " & y + 1
+            ActiveCell.Offset(0, 1).Select
+    
+            Next x
+            Next y
+    End If
+'For m = 1 To Range("A31")
+
+'    For y = min To max - 1
+'     y
+'        For x = 1 To Range("A32")
+        
+'            ActiveCell.Offset(0, 1).Select
+            
+'            Next x
+'        Next y
+    
+'    Next m
+
+
+Dim Loc
+
+ActiveCell.Offset(0, -1).Select
+
+Loc = ActiveCell.AddressLocal(1, 1)
+
+With Range("A" & (Range("A31") + 1) & ":" & Loc).Borders
+    .LineStyle = xlContinuous
+    .Weight = xlMedium
+    End With
+
+
+
+End Sub
+
+Public Sub condformat()
+
+ActiveCell.Offset(1, 0).Select
+
+Dim Loc
+Loc = ActiveCell.AddressLocal(1, 1)
+
+Set minrng = Range("C31:C" & (30 + Range("A31")))
+min = Application.WorksheetFunction.min(minrng)
+
+Set maxrng = Range("D31:D" & (30 + Range("A31")))
 max = Application.WorksheetFunction.max(maxrng)
 
-For y = min To max - 1
-    For x = 1 To Range("A32")
-        ActiveCell.Value = y & " ~ " & y + 1
-        ActiveCell.Offset(0, 1).Select
-        Next x
-    Next y
-
+      
+ If Range("A34") = 1 Then
+    For Each c In Range("C" & (Range("A31") + 1) & ":" & Loc)
+        Dim col
+        Dim r
+        col = c.Column
+        r = c.Row
+        If Range("C" & (30 + r - 1)) <= (((col - 3) \ Range("A32")) + min) And Range("D" & (30 + r - 1)) >= (((col - 3) \ Range("A32")) + min) Then
+            c.Interior.ColorIndex = 0
+        Else
+            c.Interior.ColorIndex = 3
+        End If
+            Next c
+    Else
+     For Each c In Range("C" & (Range("A31") + 1) & ":" & Loc)
+        Dim colketto
+        colketto = c.Column
+        Dim rketto
+        rketto = c.Row
+             
+        If Range("C" & (30 + rketto - 1)) <= (colketto - 3) \ Range("A32") + min And Range("D" & (30 + rketto - 1)) >= (colketto - 3) \ Range("A32") + min Then
+            c.Interior.ColorIndex = 0
+        Else
+            c.Interior.ColorIndex = 3
+        End If
+        Next c
+    End If
 
 End Sub
